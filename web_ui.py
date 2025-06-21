@@ -28,6 +28,5 @@ if query:
         st.write(response)
 
         # Convert response to speech and play
-        audio_file = text_to_speech(response)
-        audio_bytes = open(audio_file, "rb").read()
-        st.audio(audio_bytes, format="audio/mp3")
+        audio_buffer = text_to_speech(response)
+st.audio(audio_buffer, format="audio/mp3")
