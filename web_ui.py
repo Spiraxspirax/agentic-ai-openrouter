@@ -1,15 +1,19 @@
 import os
 import streamlit as st
-from gtts import gTTS
-import io
-from agent_brain import create_agent
+import asyncio
+import edge_tts
 
-def text_to_speech(text, lang="en"):
-    tts = gTTS(text=text, lang=lang)
-    audio_buffer = io.BytesIO()
-    tts.write_to_fp(audio_buffer)
-    audio_buffer.seek(0)
-    return audio_buffer
+async def generate_speech(text, voice="en-US-AriaNeural"):
+    communicate = edge_tts.Communicate(text, voice)
+    output_file = "output.mp3"
+    await communicate.save(output_file)
+    return output_file
+
+def text_to_speech(text):
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    return loop.run_until_complete(generate_speech(text))
+
 
 st.set_page_config(page_title="Nishu AI Chat", page_icon="🧠")
 st.title("🤖 Nishu AI Chat with Voice")
