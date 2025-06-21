@@ -3,6 +3,10 @@ from langchain_community.chat_models import ChatOpenAI
 from langchain.agents import initialize_agent, AgentType
 from langchain.tools import Tool
 
+# Dummy tool that echoes back the input
+def echo_tool(input_text: str) -> str:
+    return f"You said: {input_text}"
+
 def create_agent():
     llm = ChatOpenAI(
         temperature=0.6,
@@ -11,14 +15,6 @@ def create_agent():
         model="openai/gpt-3.5-turbo"
     )
 
-    tools = []  # Add tools if needed
-
-    agent = initialize_agent(
-        tools,
-        llm,
-        agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
-        verbose=True,
-        handle_parsing_errors=True
-    )
-
-    return agent
+    tools = [
+        Tool(
+            name="Echo
