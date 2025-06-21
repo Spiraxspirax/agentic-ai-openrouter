@@ -29,5 +29,7 @@ if query:
         st.write(response)
 
         # Convert to speech
-        audio_buffer = text_to_speech(response)
-        st.audio(audio_buffer, format="audio/mp3")
+    audio_path = text_to_speech(response)
+with open(audio_path, "rb") as audio_file:
+    st.audio(audio_file.read(), format="audio/mp3")
+
