@@ -1,20 +1,19 @@
 import os
 import streamlit as st
 from gtts import gTTS
-import uuid
+import io
 
-from agent_brain import create_agent
-
-# Function to convert text to speech and return audio file path
 def text_to_speech(text, lang="en"):
     tts = gTTS(text=text, lang=lang)
-    filename = f"output_{uuid.uuid4()}.mp3"
-    tts.save(filename)
-    return filename
+    audio_buffer = io.BytesIO()
+    tts.write_to_fp(audio_buffer)
+    audio_buffer.seek(0)
+    return audio_buffer
+
 
 # Streamlit UI
-st.set_page_config(page_title="Agentic AI Chat", page_icon="🧠")
-st.title("🤖 Agentic AI Chat with Voice")
+st.set_page_config(page_title="Nishu's AI Chat", page_icon="🧠")
+st.title("Nishu's AI Chat with Voice")
 
 # Input box
 query = st.text_input("Ask your local AI anything:", placeholder="e.g. What is quantum computing?")
