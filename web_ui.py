@@ -30,6 +30,6 @@ if query:
         st.markdown("### 💬 AI Response")
         st.write(response)
 
-        audio_path = text_to_speech(response)
+     audio_path = text_to_speech(str(response))
         with open(audio_path, "rb") as audio_file:
             st.audio(audio_file.read(), format="audio/mp3")
