@@ -1,5 +1,5 @@
-edge-tts
 streamlit
 langchain
 langchain-community
 langchain-openai
+edge-tts
