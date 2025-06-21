@@ -1,8 +1,10 @@
 import os
 import streamlit as st
+from agent_brain import create_agent
 import asyncio
 import edge_tts
 
+# Text-to-speech with edge-tts
 async def generate_speech(text, voice="en-US-AriaNeural"):
     communicate = edge_tts.Communicate(text, voice)
     output_file = "output.mp3"
@@ -14,11 +16,11 @@ def text_to_speech(text):
     asyncio.set_event_loop(loop)
     return loop.run_until_complete(generate_speech(text))
 
+# Streamlit UI
+st.set_page_config(page_title="Agentic AI Chat", page_icon="🧠")
+st.title("🤖 Agentic AI Chat with Voice")
 
-st.set_page_config(page_title="Nishu AI Chat", page_icon="🧠")
-st.title("🤖 Nishu AI Chat with Voice")
-
-query = st.text_input("Ask your local AI anything:", placeholder="e.g. What is quantum computing?")
+query = st.text_input("Ask your local AI anything:")
 
 if query:
     with st.spinner("Thinking..."):
@@ -28,8 +30,6 @@ if query:
         st.markdown("### 💬 AI Response")
         st.write(response)
 
-        # Convert to speech
-    audio_path = text_to_speech(response)
-with open(audio_path, "rb") as audio_file:
-    st.audio(audio_file.read(), format="audio/mp3")
-
+        audio_path = text_to_speech(response)
+        with open(audio_path, "rb") as audio_file:
+            st.audio(audio_file.read(), format="audio/mp3")
